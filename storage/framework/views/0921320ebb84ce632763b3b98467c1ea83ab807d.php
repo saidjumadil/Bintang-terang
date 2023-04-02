@@ -7,7 +7,8 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mb-3" action="" method="POST">
+                <form class="mb-3" action="<?php echo e(route('pesan')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <div class="mx-3">
                         <div class="col col-sm-12 ">
                             <label class="col-sm-12 col-form-label">Atas Nama</label>
@@ -19,10 +20,11 @@
                         </div>
                         <div class="col col-sm-12 ">
                             <label class="col-sm-12 col-form-label">Jenis Mobil</label>
-                            <select class="form-control" name="diskon" id="diskon">
+                            
+                            <select class="form-control" name="jenis" id="jenis">
                                 <option value="">-- Pilih Jenis Mobil --</option>
-                                <option value="">Mini Bus</option>
-                                <option value="">Sedan</option>
+                                <?php echo e($jenisMobil); ?>
+
                             </select>
                         </div>
                         <div class="col col-sm-12 ">
