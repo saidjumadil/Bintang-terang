@@ -14,20 +14,21 @@
 	            <div class="col-xl-7"><img class="bg-img-cover bg-center" src="{{ asset('assets/images/doorsmeer.jpg') }}" alt="looginpage" /></div>
 	            <div class="col-xl-5 p-0">
 	                <div class="login-card">
-	                    <form class="theme-form login-form">
+	                    <form class="theme-form login-form" action="{{route('login.post')}}" method="POST">
 	                        <h4>Login</h4>
+							@csrf
 	                        <div class="form-group">
 	                            <label>Username</label>
 	                            <div class="input-group">
-	                                <span class="input-group-text"><i class="icon-email"></i></span>
-	                                <input class="form-control" type="text" required="" placeholder="" />
+	                                <span class="input-group-text"><i class="icon-user"></i></span>
+	                                <input class="form-control" type="text" name="username" required="" placeholder="" />
 	                            </div>
 	                        </div>
 	                        <div class="form-group">
 	                            <label>Password</label>
 	                            <div class="input-group">
 	                                <span class="input-group-text"><i class="icon-lock"></i></span>
-	                                <input class="form-control" type="password" name="login[password]" required="" placeholder="*********" />
+	                                <input class="form-control" type="password" name="password" required="" placeholder="*********" />
 	                                <div class="show-hide"><span class="show"> </span></div>
 	                            </div>
 	                        </div>

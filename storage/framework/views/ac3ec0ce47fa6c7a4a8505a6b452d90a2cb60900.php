@@ -24,6 +24,11 @@
 							</div>
 							<div class="col d-flex justify-content-end">
 								<?php $__env->startComponent('doorsmeer.components.pesan'); ?>
+									<?php $__env->slot('jenisMobil'); ?>
+										<?php $__currentLoopData = $jenisMobil; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<option value="<?php echo e($item->id); ?>|<?php echo e($item->nama); ?>"><?php echo e($item->nama); ?></option>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									<?php $__env->endSlot(); ?>
 								<?php echo $__env->renderComponent(); ?>
 							</div>
 						</div>
@@ -41,61 +46,81 @@
 	                                    <th scope="col">Tanggal</th>
 	                                    <th scope="col">Total Pembayaran</th>
 	                                    <th scope="col">Status</th>
+	                                    <th scope="col"></th>
+	                                    <th scope="col"></th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
-	                                    <td>
-	                                        1
-	                                    </td>
-	                                    <td>
-	                                        Said Jumadil Akbar
-	                                    </td>
-	                                    <td>BL 5422 KL</td>
-	                                    <td>Mini Bus</td>
-	                                    <td>081354132223</td>
-	                                    <td class="font-success">12 February 2023</td>
-	                                    <td>Rp. 65.000</td>
-	                                    <td>
-	                                        <button class="btn btn-success btn-xs" type="button" data-original-title="btn btn-success btn-xs" title="">Selesai</button>
-	                                    </td>
-	                                </tr>
-									<tr>
-	                                    <td>
-	                                        2
-	                                    </td>
-	                                    <td>
-	                                        Said Jumadil Akbar
-	                                    </td>
-	                                    <td>BL 449 MM</td>
-	                                    <td>Mini Bus</td>
-	                                    <td>081354132223</td>
-	                                    <td class="font-success">12 February 2023</td>
-	                                    <td>Rp. 65.000</td>
-	                                    <td>
-											<?php $__env->startComponent('doorsmeer.components.bayar'); ?>
-												<?php $__env->slot('harga'); ?>
-													65000
-												<?php $__env->endSlot(); ?>
-											<?php echo $__env->renderComponent(); ?>
-	                                    </td>
-	                                </tr>
-									<tr>
-	                                    <td>
-	                                        3
-	                                    </td>
-	                                    <td>
-	                                        Said Jumadil Akbar
-	                                    </td>
-	                                    <td>BL 443 RL</td>
-	                                    <td>Sedan</td>
-	                                    <td>081354132223</td>
-	                                    <td class="font-success">12 February 2023</td>
-	                                    <td>Rp. 50.000</td>
-	                                    <td>
-	                                        <button class="btn btn-warning btn-xs" type="button" data-original-title="btn btn-warning btn-xs" title="">Diproses</button>
-	                                    </td>
-	                                </tr>
+									
+									<?php $__currentLoopData = $pesans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<tr>
+											<td>
+												<?php echo e($index + 1); ?>
+
+											</td>
+											<td>
+												<?php echo e($item->nama); ?>
+
+											</td>
+											<td><?php echo e($item->plat); ?></td>
+											<td><?php echo e($item->jenis_mobil); ?></td>
+											<td><?php echo e($item->hp); ?></td>
+											<td class="font-success"><?php echo e(date_format(date_create($item->tanggal), "d F Y")); ?></td>
+											<td>Rp. <?php echo e($item->total); ?></td>
+											<td>
+												<?php if($item->status == 1): ?>
+													<button class="btn btn-success btn-sm" type="button" data-original-title="btn btn-success btn-xs" title="">Selesai</button>
+												<?php else: ?>
+													<?php $__env->startComponent('doorsmeer.components.bayar'); ?>
+														<?php $__env->slot('harga'); ?>
+															<?php echo e($item->total); ?>
+
+														<?php $__env->endSlot(); ?>
+														<?php $__env->slot('id'); ?>
+															<?php echo e($item->id); ?>
+
+														<?php $__env->endSlot(); ?>
+													<?php echo $__env->renderComponent(); ?>
+												<?php endif; ?>
+											</td>
+											<td>
+												<?php $__env->startComponent('doorsmeer.components.edit'); ?>
+													<?php $__env->slot('jenisMobil'); ?>
+														<?php $__currentLoopData = $jenisMobil; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+															<?php if($row->id == $item->id_jenis_mobil): ?>
+															<option value="<?php echo e($row->id); ?>" selected><?php echo e($row->nama); ?></option>	
+															<?php else: ?>
+															<option value="<?php echo e($row->id); ?>"><?php echo e($row->nama); ?></option>
+															<?php endif; ?>
+														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+													<?php $__env->endSlot(); ?>
+													<?php $__env->slot('nama'); ?>
+														<?php echo e($item->nama); ?>
+
+													<?php $__env->endSlot(); ?>
+													<?php $__env->slot('plat'); ?>
+														<?php echo e($item->plat); ?>
+
+													<?php $__env->endSlot(); ?>
+													<?php $__env->slot('hp'); ?>
+														<?php echo e($item->hp); ?>
+
+													<?php $__env->endSlot(); ?>
+													<?php $__env->slot('id'); ?>
+														<?php echo e($item->id); ?>
+
+													<?php $__env->endSlot(); ?>
+												<?php echo $__env->renderComponent(); ?>
+											</td>
+											<td>
+												<form action="<?php echo e(route('hapus')); ?>" method="post">
+													<?php echo csrf_field(); ?>
+													<input type="hidden" name="id" value="<?php echo e($item->id); ?>">
+													<button class="btn btn-danger btn-sm" type="submit" data-original-title="btn btn-success btn-xs" title="">Hapus</button>
+												</form>
+											</td>
+										</tr>
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 	                            </tbody>
 	                        </table>
 	                    </div>

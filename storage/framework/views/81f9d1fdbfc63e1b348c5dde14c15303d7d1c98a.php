@@ -15,7 +15,7 @@
     <div class="nav-right col pull-right right-menu p-0">
       <ul class="nav-menus">
         <li class="onhover-dropdown p-0">
-          <button class="btn btn-primary-light" type="button"><i data-feather="log-out"></i>Log out</button>
+          <a href="<?php echo e(route('logout')); ?>" class="btn btn-primary-light" type="button"><i data-feather="log-out"></i>Log out</a>
         </li>
       </ul>
     </div>

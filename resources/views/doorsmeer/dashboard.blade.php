@@ -23,6 +23,11 @@
 							</div>
 							<div class="col d-flex justify-content-end">
 								@component('doorsmeer.components.pesan')
+									@slot('jenisMobil')
+										@foreach ($jenisMobil as $item)
+											<option value="{{$item->id}}|{{$item->nama}}">{{$item->nama}}</option>
+										@endforeach
+									@endslot
 								@endcomponent
 							</div>
 						</div>
@@ -40,61 +45,73 @@
 	                                    <th scope="col">Tanggal</th>
 	                                    <th scope="col">Total Pembayaran</th>
 	                                    <th scope="col">Status</th>
+	                                    <th scope="col"></th>
+	                                    <th scope="col"></th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	                                <tr>
-	                                    <td>
-	                                        1
-	                                    </td>
-	                                    <td>
-	                                        Said Jumadil Akbar
-	                                    </td>
-	                                    <td>BL 5422 KL</td>
-	                                    <td>Mini Bus</td>
-	                                    <td>081354132223</td>
-	                                    <td class="font-success">12 February 2023</td>
-	                                    <td>Rp. 65.000</td>
-	                                    <td>
-	                                        <button class="btn btn-success btn-xs" type="button" data-original-title="btn btn-success btn-xs" title="">Selesai</button>
-	                                    </td>
-	                                </tr>
-									<tr>
-	                                    <td>
-	                                        2
-	                                    </td>
-	                                    <td>
-	                                        Said Jumadil Akbar
-	                                    </td>
-	                                    <td>BL 449 MM</td>
-	                                    <td>Mini Bus</td>
-	                                    <td>081354132223</td>
-	                                    <td class="font-success">12 February 2023</td>
-	                                    <td>Rp. 65.000</td>
-	                                    <td>
-											@component('doorsmeer.components.bayar')
-												@slot('harga')
-													65000
-												@endslot
-											@endcomponent
-	                                    </td>
-	                                </tr>
-									<tr>
-	                                    <td>
-	                                        3
-	                                    </td>
-	                                    <td>
-	                                        Said Jumadil Akbar
-	                                    </td>
-	                                    <td>BL 443 RL</td>
-	                                    <td>Sedan</td>
-	                                    <td>081354132223</td>
-	                                    <td class="font-success">12 February 2023</td>
-	                                    <td>Rp. 50.000</td>
-	                                    <td>
-	                                        <button class="btn btn-warning btn-xs" type="button" data-original-title="btn btn-warning btn-xs" title="">Diproses</button>
-	                                    </td>
-	                                </tr>
+									
+									@foreach ($pesans as $index => $item)
+										<tr>
+											<td>
+												{{$index + 1}}
+											</td>
+											<td>
+												{{$item->nama}}
+											</td>
+											<td>{{$item->plat}}</td>
+											<td>{{$item->jenis_mobil}}</td>
+											<td>{{$item->hp}}</td>
+											<td class="font-success">{{date_format(date_create($item->tanggal), "d F Y")}}</td>
+											<td>Rp. {{$item->total}}</td>
+											<td>
+												@if ($item->status == 1)
+													<button class="btn btn-success btn-sm" type="button" data-original-title="btn btn-success btn-xs" title="">Selesai</button>
+												@else
+													@component('doorsmeer.components.bayar')
+														@slot('harga')
+															{{$item->total}}
+														@endslot
+														@slot('id')
+															{{$item->id}}
+														@endslot
+													@endcomponent
+												@endif
+											</td>
+											<td>
+												@component('doorsmeer.components.edit')
+													@slot('jenisMobil')
+														@foreach ($jenisMobil as $row)
+															@if ($row->id == $item->id_jenis_mobil)
+															<option value="{{$row->id}}" selected>{{$row->nama}}</option>	
+															@else
+															<option value="{{$row->id}}">{{$row->nama}}</option>
+															@endif
+														@endforeach
+													@endslot
+													@slot('nama')
+														{{$item->nama}}
+													@endslot
+													@slot('plat')
+														{{$item->plat}}
+													@endslot
+													@slot('hp')
+														{{$item->hp}}
+													@endslot
+													@slot('id')
+														{{$item->id}}
+													@endslot
+												@endcomponent
+											</td>
+											<td>
+												<form action="{{route('hapus')}}" method="post">
+													@csrf
+													<input type="hidden" name="id" value="{{$item->id}}">
+													<button class="btn btn-danger btn-sm" type="submit" data-original-title="btn btn-success btn-xs" title="">Hapus</button>
+												</form>
+											</td>
+										</tr>
+									@endforeach
 	                            </tbody>
 	                        </table>
 	                    </div>

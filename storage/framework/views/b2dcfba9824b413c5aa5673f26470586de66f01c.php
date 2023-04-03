@@ -2,8 +2,8 @@
     <div class="sidebar-user text-center">
         <a class="setting-primary" href="javascript:void(0)"><i data-feather="settings"></i></a><img class="img-90 rounded-circle" src="<?php echo e(asset('assets/images/dashboard/1.png')); ?>" alt="" />
         <!-- <div class="badge-bottom"><span class="badge badge-primary">New</span></div> -->
-        <a href="user-profile"> <h6 class="mt-3 f-14 f-w-600">Said Jumadil</h6></a>
-        <p class="mb-0 font-roboto">Admin</p>
+        <a href="user-profile"> <h6 class="mt-3 f-14 f-w-600"><?php echo e(Auth::user()->nama); ?></h6></a>
+        <p class="mb-0 font-roboto"><?php echo e(Auth::user()->username); ?></p>
     </div>
     <nav>
         <div class="main-navbar">
@@ -20,6 +20,9 @@
                     </li>
                     <li class="dropdown">
                         <a class="nav-link menu-title link-nav <?php echo e(routeActive('index')); ?>" href="<?php echo e(route('index')); ?>"><i data-feather="home"></i><span>Dashboard</span></a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="nav-link menu-title link-nav <?php echo e(routeActive('karyawan')); ?>" href="<?php echo e(route('karyawan')); ?>"><i data-feather="user"></i><span>Karyawan</span></a>
                     </li>
                 </ul>
             </div>
