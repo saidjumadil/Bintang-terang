@@ -7,7 +7,7 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mb-3" action="" method="POST">
+                <form class="mb-3" action="{{route('bayar')}}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{$id}}">
                     <div class="mx-3">

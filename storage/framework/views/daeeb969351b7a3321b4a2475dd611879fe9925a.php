@@ -7,10 +7,10 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="mb-3" action="{{route('password.update')}}" method="POST">
-                    @csrf
+                <form class="mb-3" action="<?php echo e(route('password.update')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     <div class="mx-3">
-                        <input type="hidden" name="id" value="{{$id}}">
+                        <input type="hidden" name="id" value="<?php echo e($id); ?>">
                         <div class="col col-sm-12 ">
                             <label class="col-sm-12 col-form-label">Password Lama</label>
                             <input class="form-control" type="password" name="password" id="password" placeholder="" required>
@@ -31,4 +31,4 @@
             </div>
         </div>
     </div>
-</div>
+</div><?php /**PATH C:\Aplikasi\Laravel\Aplikasi_Doorsmeer\resources\views/doorsmeer/components/karyawan/gantiPassword.blade.php ENDPATH**/ ?>

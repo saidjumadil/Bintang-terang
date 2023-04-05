@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function() {
     Route::prefix('/dashboard')->group(function () {
         Route::get('/', [Beranda::class, 'index'])->name('index');
         Route::post('/pesan', [Beranda::class, 'pesan'])->name('pesan');
+        Route::post('/bayar', [Beranda::class, 'bayar'])->name('bayar');
         Route::post('/edit', [Beranda::class, 'edit'])->name('edit');
         Route::post('/hapus', [Beranda::class, 'hapus'])->name('hapus');
     });
